@@ -2,7 +2,7 @@
   import readerModel from "$lib/models/readerModel";
   import { getScrollBarWidth } from "$lib/scripts/util";
 </script>
-
+<br>
 <iframe
   title="visualization"
   id="iframe"

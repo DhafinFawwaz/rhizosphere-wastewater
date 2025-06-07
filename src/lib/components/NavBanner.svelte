@@ -5,11 +5,11 @@
 
   let { autohide = false }: Props = $props();
 </script>
-<header class="header" class:autohide>
+<!-- <header class="header" class:autohide>
   <div class="contents max-width">
     
   </div>
-</header>
+</header> -->
 
 <style lang="postcss">
   .autohide {

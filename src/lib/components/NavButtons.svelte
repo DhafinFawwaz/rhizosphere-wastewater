@@ -10,7 +10,7 @@
         onclick={() => (history.pushState({}, "", "/visualization/"+window.location.search))}
         title='Visualization'
     >
-      Visualization
+      Taxonomy
     </button>
   </li>
 {/if}

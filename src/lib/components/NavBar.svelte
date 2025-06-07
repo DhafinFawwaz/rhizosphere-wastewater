@@ -83,7 +83,7 @@
   <div class="nav-wrapper mx-2">
     <div id="nav-container" class="max-width">
       
-      {#if $readerModel.name}
+      <!-- {#if $readerModel.name}
         <ul class="mx-auto flex">
           <li id="file-text">
             File: <span class='font-bold'>{$readerModel.name}</span>
@@ -110,7 +110,7 @@
             </li>
           {/if}
         </ul>
-      {/if}
+      {/if} -->
       <!-- If the screen is wide enough slap the buttons here in a grid -->
       <ul class="hidden lg:grid grid-flow-col gap-6 items-center">
         <NavButtons/>

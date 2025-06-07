@@ -196,7 +196,7 @@ class ReaderModel {
   _getTab() {
     // If we have an index path we are a visualization and auto redirect to that
     // tab otherwise we are an artifact and auto redirect to the citations tab
-    return this.indexPath ? "visualization" : "citations";
+    return this.indexPath ? "taxonomy" : "citations";
   }
 
   async _getRemoteFile(url: string): Promise<Blob> {
