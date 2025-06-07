@@ -1,7 +1,7 @@
 <script lang="ts">
   import "../../app.css";
 
-  import readerModel from "$lib/models/readerModel";
+  import { pathsMap } from "$lib/models/readerModel";
 
   import url from "$lib/scripts/url-store";
   import loading from "$lib/scripts/loading";
@@ -24,11 +24,11 @@
   let { vendored = false }: Props = $props();
 </script>
 
-<div id="positioned-container" class='px-4'>
-  <div id="content-container" class="max-width">
+<div id="positioned-container" class='p-0 m-0 overflow-y-hidden'>
+  <div id="content-container" class="p-0 m-0">
     {#if !vendored}
       <div
-        class={$url.pathname.replaceAll("/", "") === "" && $loading.status !== "LOADING" ? "tab" : "hidden-tab"}
+        class={"overflow-y-hidden" + $url.pathname.replaceAll("/", "") === "" && $loading.status !== "LOADING" ? "tab" : "hidden-tab"}
       >
         <br>
         <br>
@@ -55,33 +55,38 @@
         <Loading />
       </div>
     {/if}
-    {#if $readerModel.indexPath}
-      <div
-        class={$url.pathname.replaceAll("/", "") === "visualization" && $loading.status !== "LOADING"
-          ? "tab iframe"
-          : "hidden-tab"}
-      >
-        <Iframe />
-      </div>
-    {/if}
+
+    {#each Object.entries(pathsMap) as [path, reader]}
+      <!-- {#if reader.indexPath} -->
+        <div
+          class={$url.pathname.replaceAll("/", "") === path.toLowerCase().replaceAll(" ", "-") && $loading.status !== "LOADING"
+            ? "tab iframe"
+            : "hidden-tab"}
+        >
+          <Iframe title={path} reader={reader} />
+        </div>
+      <!-- {/if} -->
+      
+    {/each}
+
   </div>
 </div>
+
 
 <style lang="postcss">
   #positioned-container {
     position: absolute;
-    top: 55px;
+    top: 25px;
     width: 100%;
     height: calc(100% - 55px);
-    overflow: auto;
-    /* Prevent content from repositioning in Chromium when a scrollbar appears */
-    scrollbar-gutter: stable both-edges;
+    /* scrollbar-gutter: stable both-edges; */
+    padding: 0px;
+    margin: 0px;
   }
 
   #content-container {
     display: grid;
-    @apply mx-auto
-    px-2;
+    @apply m-0 p-0;
   }
 
   .tab {

@@ -2,19 +2,60 @@
   // Global styling
   import "../../app.css";
   import readerModel from "$lib/models/readerModel";
+  import { pathsMap } from "$lib/models/readerModel";
 
   import url from "$lib/scripts/url-store";
   import { onMount } from "svelte";
   import { checkBrowserCompatibility, handleError } from "$lib/scripts/util";
+  import { getFile } from "$lib/scripts/fileutils";
   import NavBar from "$lib/components/NavBar.svelte";
   import ContentContainer from "$lib/components/ContentContainer.svelte";
 
   const uuid4Regex = /[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}/;
 
+  // onMount(() => {
+  //   checkBrowserCompatibility();
+  //   for(const [path, reader] of Object.entries(pathsMap)) {
+  //     reader.attachToServiceWorker()
+  //   }
+  //   fetch("/_/wakeup");
+  // });
+
   onMount(() => {
     checkBrowserCompatibility();
-    readerModel.attachToServiceWorker();
     fetch("/_/wakeup");
+
+    window.navigator.serviceWorker.onmessage = (event) => {
+      const { session, type, filename } = event.data;
+
+      const targetReader = Object.values(pathsMap).find(
+        (reader) => reader.session === session,
+      );
+
+      if (!targetReader) {
+        return;
+      }
+
+      switch (type) {
+        case "GET_DATA":
+          getFile(
+            decodeURIComponent(filename),
+            targetReader.uuid,
+            targetReader.zipReader,
+          )
+            .then((data) => {
+              event.ports[0].postMessage(data);
+            })
+            .catch((error) => {
+              console.error(error);
+              event.ports[0].postMessage({ data: "", type: "error" });
+            });
+          break;
+        default:
+          console.log(`Unknown SW event type: ${type}`);
+          break;
+      }
+    };
   });
 
   // This block runs every time the URL bar updates. It determines what to do based

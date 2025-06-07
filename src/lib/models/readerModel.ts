@@ -12,7 +12,7 @@ import CitationsModel from "$lib/models/citationsModel";
 import ProvenanceModel from "$lib/models/provenanceModel";
 import { getFile, getYAML } from "$lib/scripts/fileutils";
 
-class ReaderModel {
+export class ReaderModel {
   error = "";
   errorMessage = "";
 
@@ -34,6 +34,8 @@ class ReaderModel {
 
   provenanceModel: ProvenanceModel = new ProvenanceModel();
   citationsModel: CitationsModel = new CitationsModel();
+
+  title: string = "Demux";
 
   //***************************************************************************
   // Start boilerplate to make this a subscribable svelte store
@@ -60,8 +62,9 @@ class ReaderModel {
   // End boilerplate to make this a subscribable svelte store
   //***************************************************************************
 
-  constructor() {
+  constructor(title: string = "Demux") {
     this.session = Math.random().toString(36).substr(2);
+    this.title = title;
   }
 
   clear() {
@@ -122,7 +125,7 @@ class ReaderModel {
     }
 
     // We set this after reading the data because sometimes which tab we go to
-    // is dependent on whether we read an artifact or a visualization and we
+    // is dependent on whether we read an artifact or a demux and we
     // don't have a great way of knowing that for certain until we've actually
     // read it
     if (src instanceof File) {
@@ -174,7 +177,7 @@ class ReaderModel {
 
     // Pushes state because this change necessarily happened to move from the
     // root page to the new default page for the provided file
-    history.pushState({}, "", `/${tab}/?src=${this.urlSrc}`);
+    // history.pushState({}, "", `/${tab}/?src=${this.urlSrc}`);
   }
 
   _setRemoteSrc(src: string) {
@@ -194,9 +197,10 @@ class ReaderModel {
   }
 
   _getTab() {
-    // If we have an index path we are a visualization and auto redirect to that
+    // If we have an index path we are a demux and auto redirect to that
     // tab otherwise we are an artifact and auto redirect to the citations tab
-    return this.indexPath ? "taxonomy" : "citations";
+    // return this.indexPath ? "demux" : "citations";
+    return this.title.toLowerCase().replaceAll(" ", "-");
   }
 
   async _getRemoteFile(url: string): Promise<Blob> {
@@ -235,7 +239,7 @@ class ReaderModel {
 
     const jsZip = new JSZip();
     const zip = await jsZip.loadAsync(data);
-    const error = new Error("Not a valid QIIME 2 archive.");
+    const error = new Error("Not a valid archive.");
 
     // Verify layout:
     // 1) Root dir named with UUID, only object in zip root
@@ -283,12 +287,15 @@ class ReaderModel {
     // Set Metadata
     this.metadata = await getYAML("metadata.yaml", this.uuid, this.zipReader);
 
-    // Determine if we have a visualization or an artifact
-    if (this.metadata["type"] === "Visualization") {
+    // Determine if we have a demux or an artifact
+    // if (this.metadata["type"] === "Visualization") {
+    //   this.indexPath = `/_/${this.session}/${UUID}/data/index.html`;
+    // } else {
+    //   this.indexPath = "";
+    // }
       this.indexPath = `/_/${this.session}/${UUID}/data/index.html`;
-    } else {
-      this.indexPath = "";
-    }
+      console.log("init", this.title, this.indexPath);
+
 
     // Set Citations
     loading.setMessage("Loading Citations");
@@ -338,5 +345,28 @@ class ReaderModel {
 }
 
 // Create a singleton version of the reader for this session
-const readerModel = new ReaderModel();
+const readerModel = new ReaderModel("Demux");
 export default readerModel;
+export const readerModelDemux = readerModel;
+export const readerModelTable = new ReaderModel("Table");
+export const readerModelRepSeqs = new ReaderModel("Rep Seqs");
+export const readerModelDenoising = new ReaderModel("Denoising");
+export const readerModelTaxonomy = new ReaderModel("Taxonomy");
+export const readerModelTree = new ReaderModel("Tree");
+export const readerModelDiversity = new ReaderModel("Diversity");
+export const readerModelPredictions = new ReaderModel("Predictions");
+
+export const pathsMap = {
+  "Demux": readerModelDemux,
+  "Table": readerModelTable,
+  "Rep Seqs": readerModelRepSeqs,
+  "Denoising": readerModelDenoising,
+  "Taxonomy": readerModelTaxonomy,
+  "Tree": readerModelTree,
+  "Diversity": readerModelDiversity,
+  "Predictions": readerModelPredictions,
+}
+
+export function toUrl(path: string): string {
+  return `/${path.toLowerCase().replaceAll(" ", "-")}/${window.location.search}`;
+}

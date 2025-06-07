@@ -42,29 +42,7 @@
   });
 
   function navLogoClicked(event: MouseEvent) {
-    // It's easiest to just calculate this here. If we do it at the top of the
-    // page then we will likely do it before index path is set.
-    const logoTarget = vendored ? ($readerModel.indexPath ? "/visualization/" : "/citations/") : "/";
-
-    if (event.ctrlKey || event.metaKey) {
-      return;
-    } else {
-      event.preventDefault();
-    }
-
-    if ($loading.status === "LOADING") {
-      // If we are in the loading state go back to root and reload to force the
-      // loading to stop
-      history.pushState({}, "", logoTarget);
-      location.reload();
-    } else if ($url.pathname.replaceAll("/", "") === "error") {
-      // If we are navigating away from the error page then we want to clean out
-      // the errored state and push clean state
-      readerModel.clear();
-      history.pushState({}, "", logoTarget);
-    } else {
-      history.pushState({}, "", logoTarget + window.location.search);
-    }
+    
   }
 </script>
 
@@ -112,7 +90,7 @@
         </ul>
       {/if} -->
       <!-- If the screen is wide enough slap the buttons here in a grid -->
-      <ul class="hidden lg:grid grid-flow-col gap-6 items-center">
+      <ul class="grid grid-flow-col gap-6 items-center">
         <NavButtons/>
       </ul>
       <!-- If it isn't wide enough make them collapsible -->

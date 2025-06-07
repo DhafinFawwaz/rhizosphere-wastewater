@@ -1,36 +1,21 @@
 <script lang="ts">
   import readerModel from "$lib/models/readerModel";
   import url from "$lib/scripts/url-store";
+  import { toUrl, pathsMap } from "$lib/models/readerModel";
 </script>
 
 {#if $readerModel.indexPath}
-  <li>
-    <button
-        class={$url.pathname.replaceAll("/", "") === "visualization" ? "selected-nav-button nav-button" : "nav-button"}
-        onclick={() => (history.pushState({}, "", "/visualization/"+window.location.search))}
-        title='Visualization'
-    >
-      Taxonomy
-    </button>
-  </li>
-{/if}
-{#if $readerModel.rawSrc}
-  <li>
-    <button
-        class={$url.pathname.replaceAll("/", "") === "provenance" ? "selected-nav-button nav-button" : "nav-button"}
-        onclick={() => (history.pushState({}, "", "/provenance/"+window.location.search))}
-        title='Provenance'
-    >
-      Provenance
-    </button>
-  </li>
-  <li>
-    <button
-        class={$url.pathname.replaceAll("/", "") === "metadata" ? "selected-nav-button nav-button" : "nav-button"}
-        onclick={() => (history.pushState({}, "", "/metadata/"+window.location.search))}
-        title='Metadata'
-    >
-      Metadata
-    </button>
-  </li>
+
+  {#each Object.keys(pathsMap) as path}
+    <li>
+      <button
+        class={$url.pathname.replaceAll("/", "") === path.toLowerCase().replaceAll(" ", "-") ? "selected-nav-button nav-button" : "nav-button"}
+        onclick={() => {history.pushState({}, "", toUrl(path))}}
+        title={path}
+      >
+        {path}
+      </button>
+    </li>
+  {/each}
+
 {/if}

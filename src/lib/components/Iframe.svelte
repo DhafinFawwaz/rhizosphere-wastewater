@@ -1,18 +1,34 @@
 <script lang="ts">
-  import readerModel from "$lib/models/readerModel";
+  import { onDestroy } from "svelte";
+  import { ReaderModel } from "$lib/models/readerModel";
   import { getScrollBarWidth } from "$lib/scripts/util";
-</script>
-<br>
-<iframe
-  title="visualization"
-  id="iframe"
-  frameborder="0"
-  src={$readerModel.indexPath}
-  style:left={`calc(0% - ${getScrollBarWidth()}px)`}
-  style:width={`calc(100% + 2 * ${getScrollBarWidth()}px)`}
-></iframe>
 
-<!-- Position this manually so it takes up basically the entire viewport -->
+  export let title: string;
+  export let reader: ReaderModel;
+
+  let indexPath = "";
+
+  const unsubscribe = reader.subscribe((r) => {
+    indexPath = r.indexPath;
+  });
+
+  onDestroy(unsubscribe);
+</script>
+
+<br>
+
+{#if indexPath}
+  <iframe
+    title={title}
+    id={title}
+    frameborder="0"
+    src={indexPath}
+    style:left={`calc(0% - ${getScrollBarWidth()}px)`}
+    style:width={`calc(100% + 2 * ${getScrollBarWidth()}px)`}
+    style:height="100vh"
+  ></iframe>
+{/if}
+
 <style lang="postcss">
   #iframe {
     @apply absolute

@@ -16,7 +16,6 @@
   // This function ensures that every time you click a "Try it!" button the referenced
   // viz reloads entirely to have consistent behavior
   function galleryButton() {
-    history.pushState({}, "", "/visualization/?src=" + href);
   }
 </script>
 
