@@ -93,7 +93,7 @@ export class ReaderModel {
 
   async readData(src: File | string, tab: string = "") {
     this.clear();
-    loading.setLoading(true, "Loading started");
+    // loading.setLoading(true, "Loading started");
 
     try {
       let data = src instanceof File ? src : await this._readRemoteData(src);
@@ -134,7 +134,7 @@ export class ReaderModel {
       this._setRemoteTab(tab);
     }
 
-    loading.setLoading(false);
+    // loading.setLoading(false);
     this._dirty();
   }
 
@@ -297,15 +297,15 @@ export class ReaderModel {
       console.log("init", this.title, this.indexPath);
 
 
-    // Set Citations
-    loading.setMessage("Loading Citations");
-    this.citationsModel.init(this.uuid, zip);
-    await this.citationsModel.getCitations();
+    // // Set Citations
+    // loading.setMessage("Loading Citations");
+    // this.citationsModel.init(this.uuid, zip);
+    // await this.citationsModel.getCitations();
 
-    // Set Provenance
-    loading.setMessage("Loading Provenance");
-    this.provenanceModel.init(this.uuid, zip);
-    await this.provenanceModel.getProvenanceTree();
+    // // Set Provenance
+    // loading.setMessage("Loading Provenance");
+    // this.provenanceModel.init(this.uuid, zip);
+    // await this.provenanceModel.getProvenanceTree();
   }
 
   attachToServiceWorker() {

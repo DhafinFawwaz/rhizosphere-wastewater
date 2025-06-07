@@ -24,7 +24,7 @@
   let { vendored = false }: Props = $props();
 </script>
 
-<div id="positioned-container" class='p-0 m-0 overflow-y-hidden'>
+<div id="positioned-container" class='px-0 m-0 overflow-y-hidden'>
   <div id="content-container" class="p-0 m-0">
     {#if !vendored}
       <div
@@ -56,6 +56,7 @@
       </div>
     {/if}
 
+    <!-- Visualization -->
     {#each Object.entries(pathsMap) as [path, reader]}
       <!-- {#if reader.indexPath} -->
         <div
@@ -68,6 +69,14 @@
       <!-- {/if} -->
       
     {/each}
+    <!-- About -->
+    <div
+      class={$url.pathname.replaceAll("/", "") === "about" || $url.pathname.replaceAll("/", "") === ""
+        ? "tab iframe"
+        : "hidden-tab"}
+    >
+      <About />
+    </div>
 
   </div>
 </div>
@@ -82,6 +91,8 @@
     /* scrollbar-gutter: stable both-edges; */
     padding: 0px;
     margin: 0px;
+
+    @apply lg:px-16;
   }
 
   #content-container {
