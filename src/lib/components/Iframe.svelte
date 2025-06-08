@@ -15,7 +15,6 @@
   onDestroy(unsubscribe);
 </script>
 
-<br>
 
 {#if indexPath}
   <iframe

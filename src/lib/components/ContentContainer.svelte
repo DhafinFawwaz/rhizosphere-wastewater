@@ -56,6 +56,16 @@
       </div>
     {/if}
 
+    
+    <!-- About -->
+    <div
+      class={$url.pathname.replaceAll("/", "") === "about" || $url.pathname.replaceAll("/", "") === ""
+        ? "tab iframe"
+        : "hidden-tab"}
+    >
+      <About />
+    </div>
+
     <!-- Visualization -->
     {#each Object.entries(pathsMap) as [path, reader]}
       <!-- {#if reader.indexPath} -->
@@ -69,14 +79,6 @@
       <!-- {/if} -->
       
     {/each}
-    <!-- About -->
-    <div
-      class={$url.pathname.replaceAll("/", "") === "about" || $url.pathname.replaceAll("/", "") === ""
-        ? "tab iframe"
-        : "hidden-tab"}
-    >
-      <About />
-    </div>
 
   </div>
 </div>

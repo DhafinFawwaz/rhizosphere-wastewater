@@ -90,7 +90,7 @@
         </ul>
       {/if} -->
       <!-- If the screen is wide enough slap the buttons here in a grid -->
-      <ul class="grid grid-flow-col gap-6 items-center">
+      <ul class="grid grid-flow-col gap-2 items-center">
         <NavButtons/>
       </ul>
     </div>
@@ -108,14 +108,15 @@
   #navbar {
     width: 100vw;
     font-size: 16px;
-    box-shadow: rgb(153, 153, 153) 0px 1px 5px;
     @apply fixed
     bg-[#fcfcfc]
     w-full
     z-10
     top-0
     left-0
-    right-0;
+    right-0
+    shadow-md
+    ;
   }
 
   .nav-wrapper {
@@ -177,20 +178,17 @@
   }
 
   :global(.nav-button) {
-    @apply block
-    border-b-4
-    border-b-transparent;
+    @apply rounded-full px-3 py-1 text-sm;
+    color: #337AB7;
   }
 
   :global(.nav-button:hover) {
-    @apply text-gray-950;
-  }
+    background-color: #eeeeee;
+}
 
   :global(.selected-nav-button) {
-    @apply
-    font-bold
-    text-gray-950
-    border-b-[#e39e54];
+    @apply text-gray-700;
+    border: 1px solid #ddd;
   }
 
   :global(.nav-button::before) {

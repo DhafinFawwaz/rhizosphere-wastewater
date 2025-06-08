@@ -119,7 +119,7 @@ export class ReaderModel {
       }
 
       console.log(err);
-      loading.setLoading(false);
+      // loading.setLoading(false);
       handleError(err);
       return;
     }
@@ -345,9 +345,9 @@ export class ReaderModel {
 }
 
 // Create a singleton version of the reader for this session
-const readerModel = new ReaderModel("Demux");
+const readerModel = new ReaderModel("None");
 export default readerModel;
-export const readerModelDemux = readerModel;
+export const readerModelDemux = new ReaderModel("Demux");
 export const readerModelTable = new ReaderModel("Table");
 export const readerModelRepSeqs = new ReaderModel("Rep Seqs");
 export const readerModelDenoising = new ReaderModel("Denoising");
