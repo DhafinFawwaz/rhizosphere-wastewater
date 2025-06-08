@@ -14,6 +14,8 @@ const config = {
     // See https://kit.svelte.dev/docs/adapters for more information about adapters.
     adapter: adapter({
       fallback: "index.html",
+      pages: "public",
+      assets: "public",
     }),
     files: {
       routes: "src/routes-sw",
