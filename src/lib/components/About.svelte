@@ -32,21 +32,6 @@
         Analisis dampak limbah perkotaan terhadap struktur dan keanekaragaman 
         komunitas bakteri di rizosfer melalui pendekatan metagenomik
       </p>
-      
-      <div class="hero-stats">
-        <div class="stat">
-          <div class="stat-number">27</div>
-          <div class="stat-label">Sampel Metagenom</div>
-        </div>
-        <div class="stat">
-          <div class="stat-number">5,548</div>
-          <div class="stat-label">Fitur Unik (ASV)</div>
-        </div>
-        <div class="stat">
-          <div class="stat-number">63.38%</div>
-          <div class="stat-label">Variasi Data</div>
-        </div>
-      </div>
     </div>
     
     <div class="hero-visual">
@@ -280,7 +265,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    right: 0;
+    right: 50%;
     bottom: 0;
     background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23475569' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
     z-index: 0;
@@ -288,10 +273,10 @@
   
   .hero-content {
     flex: 1;
-    max-width: 600px;
-    z-index: 1;
+    max-width: 50%;
+    z-index: 10;
     position: relative;
-    padding-right: 2rem;
+    padding-right: 3rem;
   }
   
   .hero-badge {
@@ -329,7 +314,7 @@
   .hero-subtitle {
     font-size: 1.2rem;
     line-height: 1.6;
-    margin-bottom: 3rem;
+    margin-bottom: 0;
     color: #64748b;
   }
   
@@ -366,7 +351,8 @@
     right: 0;
     width: 50%;
     height: 100vh;
-    z-index: 0;
+    z-index: 1;
+    pointer-events: auto;
   }
   
   spline-viewer {
