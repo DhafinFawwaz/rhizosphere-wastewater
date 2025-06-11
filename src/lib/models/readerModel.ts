@@ -348,7 +348,7 @@ export class ReaderModel {
 const readerModel = new ReaderModel("None");
 export default readerModel;
 export const readerModelDemux = new ReaderModel("Demux");
-export const readerModelTable = new ReaderModel("Table");
+export const readerModelTable = new ReaderModel("Filtered");
 export const readerModelRepSeqs = new ReaderModel("Rep Seqs");
 export const readerModelDenoising = new ReaderModel("Denoising");
 export const readerModelTaxonomy = new ReaderModel("Taxonomy");
@@ -358,7 +358,7 @@ export const readerModelPredictions = new ReaderModel("Predictions");
 
 export const pathsMap = {
   "Demux": readerModelDemux,
-  "Table": readerModelTable,
+  "Filtered": readerModelTable,
   "Rep Seqs": readerModelRepSeqs,
   "Denoising": readerModelDenoising,
   "Taxonomy": readerModelTaxonomy,
